@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { TimeIndicator } from './components/TimeIndicator';
 
 const Page = styled.div`
-  background-image: ${props => props.image ? 'url(data:image/png;base64,' + props.image + ')' : 'linear-gradient(to bottom right, #ff0070, #ff0070, black)'};
+  background-image: ${props => props.image ? 'url(data:image/png;base64,' + props.image + ')' : 'linear-gradient(to bottom right, #ff0070, #800038, black)'};
   background-color: #111;
   background-repeat: no-repeat;
   background-position: center center;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import { subscribeToUpdates } from './api';
 import { Display } from './Display';
+import { Clock } from './Clock';
 
 class App extends Component {
   state = {
@@ -31,7 +32,7 @@ class App extends Component {
         ...state,
         resetTimer: setTimeout(
           () => this.setState(state => ({...state, showClock: true, resetTimer: null})),
-          3000
+          10000
         )
       }));
     } else if (!prevState.playing && this.state.playing) {
@@ -44,7 +45,7 @@ class App extends Component {
 
   render() {
     return this.state.showClock
-    ? <h1>Hi! I'm a clock!</h1>
+    ? <Clock />
     : <Display
         id={this.state.id}
         title={this.state.title}
