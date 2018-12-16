@@ -8,7 +8,16 @@ const TimeDisplay = styled.div`
   font-size: 40px;
   color: #fff;
   margin-top: 12px;
-  white-space: nowrap;
+`;
+
+const TimeElement = styled.span`
+  display: inline-block;
+  min-width: 58px;
+  text-align: center;
+`;
+
+const TimeDivider = styled.span`
+
 `;
 
 export class TimeIndicator extends React.Component {
@@ -55,11 +64,28 @@ export class TimeIndicator extends React.Component {
     clearInterval(this.timerRef);
   }
 
+  getHours = length => Math.floor((length || 1) / 3600).toString();
+  getMinutes = length => Math.floor((length || 1) / 60).toString();
+  getSeconds = length => Math.round(length % 60).toString().padStart(2, 0);
+
+  getDuration = length => {
+    const hours = this.getHours(length);
+    const minutes = hours ? this.getMinutes(length).toString().padStart(2, 0) : this.getMinutes(length).toString();
+    const seconds = this.getSeconds(length);
+
+
+  }
+
   getDuration = length => (length ? `${Math.floor((length || 1) / 60)}:${Math.round(length % 60).toString().padStart(2, 0)}` : '0:00');
 
   render() {
     return <TimeDisplay>
-      {this.getDuration(this.state.count)} - {this.props.progress ? this.props.progress.duration : null}
+      {this.getHours(this.state.count) > 0 ? <TimeElement>{this.getHours(this.state.count)}</TimeElement> : null}
+      {this.getHours(this.state.count) > 0 ? <TimeDivider>:</TimeDivider> : null}
+      <TimeElement>{this.getMinutes(this.state.count)}</TimeElement>
+      <TimeDivider>:</TimeDivider>
+      <TimeElement>{this.getSeconds(this.state.count)}</TimeElement>
+      <TimeElement> - {this.props.progress ? this.props.progress.duration : null}</TimeElement>
     </TimeDisplay>;
   }
 

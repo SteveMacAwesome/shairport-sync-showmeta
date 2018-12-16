@@ -1,8 +1,37 @@
 import React, { Component } from 'react';
 
+import styled from 'styled-components';
+
 import { subscribeToUpdates } from './api';
 import { Display } from './Display';
 import { Clock } from './Clock';
+
+const FadeSwitch = styled.div`
+  position: absolute;
+  top: 240;
+  left: 400;
+  z-index: 1000;
+  opacity: ${props => props.in ? 1 : 0};
+  transition: opacity 2s ease;
+`;
+
+const Background = styled.div`
+  background-image: linear-gradient(to bottom right, #ff0070, #800038, black);
+  background-color: #222;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 800px;
+  background-blend-mode: overlay;
+  height: 480px;
+  width: 800px;
+  padding: 60px;
+  display: flex;
+  box-sizing: border-box;
+  flex-flow: column nowrap;
+
+  align-items: center;
+  justify-content: center;
+`;
 
 class App extends Component {
   state = {
@@ -32,7 +61,7 @@ class App extends Component {
         ...state,
         resetTimer: setTimeout(
           () => this.setState(state => ({...state, showClock: true, resetTimer: null})),
-          10000
+          1000
         )
       }));
     } else if (!prevState.playing && this.state.playing) {
@@ -44,19 +73,23 @@ class App extends Component {
   }
 
   render() {
-    return this.state.showClock
-    ? <Clock />
-    : <Display
-        id={this.state.id}
-        title={this.state.title}
-        artist={this.state.artist}
-        album={this.state.album}
-        playing={this.state.playing}
-        image={this.state.image}
-        volume={this.state.volume}
-        progress={this.state.progress}
-      />
-    ;
+    return <Background>
+      <FadeSwitch in={this.state.showClock}>
+        <Clock />
+      </FadeSwitch>
+      <FadeSwitch in={!this.state.showClock}>
+        <Display
+          id={this.state.id}
+          title={this.state.title}
+          artist={this.state.artist}
+          album={this.state.album}
+          playing={this.state.playing}
+          image={this.state.image}
+          volume={this.state.volume}
+          progress={this.state.progress}
+        />
+      </FadeSwitch>
+    </Background>;
   }
 }
 
