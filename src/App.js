@@ -46,7 +46,7 @@ class App extends Component {
     volume: 0,
     progress: null,
     resetTimer: null,
-    showClock: false,
+    showClock: true,
   }
 
   componentDidMount() {
